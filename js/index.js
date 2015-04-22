@@ -1,3 +1,4 @@
+//sex
 $(document).ready(function() {
 	var chartData = [
 		{
