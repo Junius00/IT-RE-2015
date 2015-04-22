@@ -1,4 +1,3 @@
-//sex
 $(document).ready(function() {
 		var chartData = [
 		{
@@ -115,11 +114,8 @@ $(document).ready(function() {
 	}
 	
 	chartDraw("#main","test1",chartData,"test1");
-	chartDraw("#main","test2",chartData,"test2");
-	chartDraw("#main","test3",chartData,"test3");
 	$("#main").css("z-index","1");
 	$("#main").css("opacity","1");
-	alert("jQuery successfully loaded!");
 	iA = ["#scr1","#scr2","#scr3","#scr4","#main"];
 	
 	$("#ml").click(function () {

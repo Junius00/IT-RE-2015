@@ -1,7 +1,9 @@
 body {
-	margin:0;
+	margin:0%;
+	padding:0%;
+	border:0%;
 	width:100%;
-	height:100%;	
+	height:90%;	
 	font-family: 'Open Sans', sans-serif;
 	-webkit-text-size-adjust:none;
 	background-color:#152253;
@@ -9,26 +11,24 @@ body {
 }
 
 a {
-	color:white;
+	/*color:white;*/
 	text-decoration:none;
 }
 
 .graph {
-	width:98%;
+	width:100%;
 	height:50%;	
 	background-color:#CCC;
 }
 .header {
-	
-	margin-left:auto;
-	margin-right:auto;
+	position:absolute;
+	top:0%;
+	left:20%;
 	width:80%;
 	height:9%;
 	background-color:#152253;
 	text-align:center;	
-	color:white;
-	padding-top: 15px;
-	padding-bottom: 20px;
+	/*color:white;*/
 }
 
 .title {
@@ -47,7 +47,6 @@ a {
 	height: 100%;
 	background-color: #152253;
 	text-align: center;
-	color: white;
 }
 
 .hLink {
@@ -57,26 +56,17 @@ a {
 	padding-top: 10px;
 }
 
-.main {
+.content {
+	padding:0.5%;
+	/*color:white;*/
 	margin: 0px;
-	width: 20%;
+	width: 79%;
 	position: absolute;
-	top: 0%;
-	left: 0%;
-	height: 100%;
+	top: 9%;
+	left: 20%;
+	height:89%;
 	background-color: #0E161F;
 	text-align: center;	
-}
-.content {
-	padding-left:1%;
-	background-color:#141A1F;
-	color:white;
-	border-radius:1%;
-	position:absolute;
-	top:10%;
-	left:2%;
-	width:95%;
-	height:83%;
 	z-index:0;
 	opacity:0;
 	overflow-y:auto;
