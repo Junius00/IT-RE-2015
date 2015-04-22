@@ -2,9 +2,9 @@ body {
 	margin:0;
 	width:100%;
 	height:100%;	
-	font-family: 'Helvetica', sans-serif;
+	font-family: 'Open Sans', sans-serif;
 	-webkit-text-size-adjust:none;
-	background-color:#272B2F;
+	background-color:#152253;
 	color:#626A72;
 }
 
@@ -24,9 +24,11 @@ a {
 	margin-right:auto;
 	width:80%;
 	height:9%;
-	background-color:#0E161F;
+	background-color:#152253;
 	text-align:center;	
 	color:white;
+	padding-top: 15px;
+	padding-bottom: 20px;
 }
 
 .title {
@@ -36,13 +38,14 @@ a {
 }
 
 .navBar {
+
 	margin: 0px;
 	width: 20%;
 	position: absolute;
 	top: 0%;
 	left: 0%;
 	height: 100%;
-	background-color: #0E161F;
+	background-color: #152253;
 	text-align: center;
 	color: white;
 }
@@ -51,6 +54,7 @@ a {
 	width: 100%;
 	height: 25%;
 	float: left;
+	padding-top: 10px;
 }
 
 .main {
