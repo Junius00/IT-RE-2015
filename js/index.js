@@ -1,253 +1,122 @@
 //sex
 $(document).ready(function() {
-	var chartData = [
+		var chartData = [
 		{
-			"title": "1950",
-			"value": -0.307
+			"country": "USA",
+			"visits": 4025
 		},
 		{
-			"title": "1951",
-			"value": -0.168
+			"country": "China",
+			"visits": 1882
 		},
 		{
-			"title": "1952",
-			"value": -0.073
+			"country": "Japan",
+			"visits": 1809
 		},
 		{
-			"title": "1953",
-			"value": -0.027
+			"country": "Germany",
+			"visits": 1322
 		},
 		{
-			"title": "1954",
-			"value": -0.251
+			"country": "UK",
+			"visits": 1122
 		},
 		{
-			"title": "1955",
-			"value": -0.281
+			"country": "France",
+			"visits": 1114
 		},
 		{
-			"title": "1956",
-			"value": -0.348
+			"country": "India",
+			"visits": 984
 		},
 		{
-			"title": "1957",
-			"value": -0.074
+			"country": "Spain",
+			"visits": 711
 		},
 		{
-			"title": "1958",
-			"value": -0.011
+			"country": "Netherlands",
+			"visits": 665
 		},
 		{
-			"title": "1959",
-			"value": -0.074
+			"country": "Russia",
+			"visits": 580
 		},
 		{
-			"title": "1960",
-			"value": -0.124
+			"country": "South Korea",
+			"visits": 443
 		},
 		{
-			"title": "1961",
-			"value": -0.024
+			"country": "Canada",
+			"visits": 441
 		},
 		{
-			"title": "1962",
-			"value": -0.022
+			"country": "Brazil",
+			"visits": 395
 		},
 		{
-			"title": "1963",
-			"value": 0
+			"country": "Italy",
+			"visits": 386
 		},
 		{
-			"title": "1964",
-			"value": -0.296
+			"country": "Australia",
+			"visits": 384
 		},
 		{
-			"title": "1965",
-			"value": -0.217
+			"country": "Taiwan",
+			"visits": 338
 		},
 		{
-			"title": "1966",
-			"value": -0.147
-		},
-		{
-			"title": "1967",
-			"value": -0.15
-		},
-		{
-			"title": "1968",
-			"value": -0.16
-		},
-		{
-			"title": "1969",
-			"value": -0.011
-		},
-		{
-			"title": "1970",
-			"value": -0.068
-		},
-		{
-			"title": "1971",
-			"value": -0.19
-		},
-		{
-			"title": "1972",
-			"value": -0.056
-		},
-		{
-			"title": "1973",
-			"value": 0.077
-		},
-		{
-			"title": "1974",
-			"value": -0.213
-		},
-		{
-			"title": "1975",
-			"value": -0.17
-		},
-		{
-			"title": "1976",
-			"value": -0.254
-		},
-		{
-			"title": "1977",
-			"value": 0.019
-		},
-		{
-			"title": "1978",
-			"value": -0.063
-		},
-		{
-			"title": "1979",
-			"value": 0.05
-		},
-		{
-			"title": "1980",
-			"value": 0.077
-		},
-		{
-			"title": "1981",
-			"value": 0.12
-		},
-		{
-			"title": "1982",
-			"value": 0.011
-		},
-		{
-			"title": "1983",
-			"value": 0.177
-		},
-		{
-			"title": "1984",
-			"value": -0.021
-		},
-		{
-			"title": "1985",
-			"value": -0.037
-		},
-		{
-			"title": "1986",
-			"value": 0.03
-		},
-		{
-			"title": "1987",
-			"value": 0.179
-		},
-		{
-			"title": "1988",
-			"value": 0.18
-		},
-		{
-			"title": "1989",
-			"value": 0.104
-		},
-		{
-			"title": "1990",
-			"value": 0.255
-		},
-		{
-			"title": "1991",
-			"value": 0.21
-		},
-		{
-			"title": "1992",
-			"value": 0.065
-		},
-		{
-			"title": "1993",
-			"value": 0.11
-		},
-		{
-			"title": "1994",
-			"value": 0.172
-		},
-		{
-			"title": "1995",
-			"value": 0.269
-		},
-		{
-			"title": "1996",
-			"value": 0.141
-		},
-		{
-			"title": "1997",
-			"value": 0.353
-		},
-		{
-			"title": "1998",
-			"value": 0.548
-		},
-		{
-			"title": "1999",
-			"value": 0.298
-		},
-		{
-			"title": "2000",
-			"value": 0.267
-		},
-		{
-			"title": "2001",
-			"value": 0.411
-		},
-		{
-			"title": "2002",
-			"value": 0.462
-		},
-		{
-			"title": "2003",
-			"value": 0.47
-		},
-		{
-			"title": "2004",
-			"value": 0.445
-		},
-		{
-			"title": "2005",
-			"value": 0.47
+			"country": "Poland",
+			"visits": 328
 		}
 	];
 
 	function chartDraw(framediv,title,chartData,chartdiv) {
-		$(framediv).append("<p>"+title+"</p>");
-		$(framediv).append('<div id='+chartdiv+'" class="graph"></div>');
 		var chart;
-		var graph;
-	
+		$("#main").append("<p>"+title+"</p>");
+		$("#main").append("<div class='graph' id='"+chartdiv+"'></div>");
 		AmCharts.ready(function () {
+			// SERIAL CHART
 			chart = new AmCharts.AmSerialChart();
-			chart.categoryField = "title";
 			chart.dataProvider = chartData;
-			
-			graph = new AmCharts.AmGraph();
-			graph.valueField = "value";
-			graph.type = "smoothedLine";
-			graph.fillAlphas = 1;
+			chart.categoryField = "country";
+			chart.startDuration = 1;
+	
+			// AXES
+			// category
+			var categoryAxis = chart.categoryAxis;
+			categoryAxis.labelRotation = 90;
+			categoryAxis.gridPosition = "start";
+	
+			// value
+			// in case you don't want to change default settings of value axis,
+			// you don't need to create it, as one value axis is created automatically.
+	
+			// GRAPH
+			var graph = new AmCharts.AmGraph();
+			graph.valueField = "visits";
+			graph.balloonText = "[[category]]: <b>[[value]]</b>";
+			graph.type = "column";
+			graph.lineAlpha = 0;
+			graph.fillAlphas = 0.8;
 			chart.addGraph(graph);
-			
+	
+			// CURSOR
+			var chartCursor = new AmCharts.ChartCursor();
+			chartCursor.cursorAlpha = 0;
+			chartCursor.zoomable = false;
+			chartCursor.categoryBalloonEnabled = false;
+			chart.addChartCursor(chartCursor);
+	
+			chart.creditsPosition = "top-right";
+	
 			chart.write(chartdiv);
 		});
 	}
-	chartDraw("#main","fap",chartData,"fap");
+	
+	chartDraw("#main","test1",chartData,"test1");
+	chartDraw("#main","test2",chartData,"test2");
+	chartDraw("#main","test3",chartData,"test3");
 	$("#main").css("z-index","1");
 	$("#main").css("opacity","1");
 	alert("jQuery successfully loaded!");
