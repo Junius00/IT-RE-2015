@@ -4,7 +4,7 @@ body {
 	height:100%;	
 	font-family: 'Open Sans', sans-serif;
 	-webkit-text-size-adjust:none;
-	background-color:#FFB6C1;
+	background-color:#152253;
 	color:#626A72;
 }
 
@@ -23,9 +23,11 @@ a {
 	margin-right:auto;
 	width:96%;
 	height:9%;
-	background-color:#0E161F;
+	background-color:#152253;
 	text-align:center;	
 	color:white;
+	padding-top: 15px;
+	padding-bottom: 20px;
 }
 
 .title {
@@ -41,7 +43,7 @@ a {
 	top:94%;
 	left:2%;
 	height:6%;
-	background-color:#0E161F;
+	background-color:#152253;
 	text-align:center;
 	color:white;
 }
@@ -50,6 +52,7 @@ a {
 	width: 25%;
 	height: 100%;
 	float: left;
+	padding-top: 10px;
 }
 
 .content {
@@ -66,8 +69,3 @@ a {
 	opacity:0;
 	overflow-y:auto;
 }
-
-.header {
-	padding-top: 25px;
-}
-
