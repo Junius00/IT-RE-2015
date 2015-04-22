@@ -4,7 +4,7 @@ body {
 	height:100%;	
 	font-family: 'Open Sans', sans-serif;
 	-webkit-text-size-adjust:none;
-	background-color:#272B2F;
+	background-color:#FFB6C1;
 	color:#626A72;
 }
 
@@ -66,7 +66,10 @@ a {
 	opacity:0;
 	overflow-y:auto;
 }
+<<<<<<< HEAD
 
 .header {
 	padding-top: 25px;
 }
+=======
+>>>>>>> origin/master
