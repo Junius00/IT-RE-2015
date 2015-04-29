@@ -1,7 +1,7 @@
 body {
-	margin:0%;
-	padding:0%;
-	border:0%;
+	margin:0px;
+	padding:0px;
+	border:0px;
 	font-family: 'Open Sans', sans-serif;
 	-webkit-text-size-adjust:none;
 	background-color:#152253;
@@ -55,6 +55,7 @@ a {
 }
 
 .content {
+	text-align:left;
 	padding:0.5%;
 	/*color:white;*/
 	margin: 0px;
@@ -64,8 +65,11 @@ a {
 	left: 20%;
 	height:89%;
 	background-color: #0E161F;
-	text-align: center;	
 	z-index:0;
 	opacity:0;
 	overflow-y:auto;
+}
+
+.subject {
+	font-size:150%;		
 }
