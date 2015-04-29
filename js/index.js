@@ -57,6 +57,9 @@ $(document).ready(function() {
 			// AXES
 			// category
 			var categoryAxis = chart.categoryAxis;
+			categoryAxis.color = "white";
+			categoryAxis.axisColor = "white";
+			categoryAxis.gridColor = "white";
 			categoryAxis.labelRotation = 90;
 			categoryAxis.gridPosition = "start";
 	
@@ -66,6 +69,7 @@ $(document).ready(function() {
 	
 			// GRAPH
 			var graph = new AmCharts.AmGraph();
+			graph.fillColors = "white";
 			graph.valueField = "percentage";
 			graph.balloonText = "[[category]]: <b>[[value]]</b>";
 			graph.type = "column";
@@ -89,7 +93,7 @@ $(document).ready(function() {
 	function subjectRead (subjects){
 		for (var i = 0;i<subjects.length;i++)
 		{
-			$("#main").append("<p class='emphasis'><b>"+subjects[i]["subject"]+"</b>: "+subjects[i]["gpa"]+",<b> Goal: </b>"+subjects[i]["goal"]+"</p>");
+			$("#main").append("<p class='emphasis'>"+subjects[i]["subject"]+": </p><p><b>Current: </b>"+subjects[i]["gpa"]+",<b> Goal: </b>"+subjects[i]["goal"]+"</p>");
 			chartDraw("#scr2",subjects[i]["subject"],subjects[i]["chartdata"],subjects[i]["subject"]);	
 		}
 	};
