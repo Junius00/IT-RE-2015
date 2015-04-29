@@ -1,24 +1,42 @@
 $(document).ready(function() {
 	//functions and variables
-	var chartData = [
-		{
-			"exam":"Math Test 1",
-			"percentage":73	
-		},{
-			"exam":"Math Test 2",
-			"percentage":97
-		}
-	];
 	var subjects = [
 		{
 			"subject":"Mathematics I",
-			"gpa":"4.0"
+			"gpa":"4.0",
+			"chartdata":[
+				{
+					"exam":"Math Test 1",
+					"percentage":73	
+				},{
+					"exam":"Math Test 2",
+					"percentage":97
+				}
+			]
 		},{
 			"subject":"Mathematics II",
-			"gpa":"4.0"
+			"gpa":"4.0",
+			"chartdata":[
+				{
+					"exam":"Math Test 1",
+					"percentage":73	
+				},{
+					"exam":"Math Test 2",
+					"percentage":97
+				}
+			]
 		},{
 			"subject":"Physics",
-			"gpa":"4.0"
+			"gpa":"4.0",
+			"chartdata":[
+				{
+					"exam":"Math Test 1",
+					"percentage":73	
+				},{
+					"exam":"Math Test 2",
+					"percentage":97
+				}
+			]
 		}
 	];
 
@@ -65,13 +83,26 @@ $(document).ready(function() {
 		});
 	}
 	
+	function subjectRead (subjects){
+		for (var i = 0;i<subjects.length;i++)
+		{
+			$("#main").append("<p class='subject'><b>"+subjects[i]["subject"]+"</b>: "+subjects[i]["gpa"]+"</p>");
+			chartDraw("#scr2",subjects[i]["subject"],subjects[i]["chartdata"],subjects[i]["subject"]);	
+		}
+	};
 	//main start up
-	chartDraw("#scr2","Mathematics",chartData,"Mathematics");
-	for (var i = 0;i<subjects.length;i++)
-	{
-		$("#main").append("<p class='subject'><b>"+subjects[i]["subject"]+"</b>: "+subjects[i]["gpa"]+"</p>");	
-	}
+	/*var xmlhttp = new XMLHttpRequest();
+	var url = "dashboard/overview";
 	
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var subjects = JSON.parse(xmlhttp.responseText);
+			subjectRead(subjects);
+		}
+	}
+	xmlhttp.open("POST", url, true);
+	xmlhttp.send();*/
+	subjectRead(subjects);
 	$("#main").css("z-index","1");
 	$("#main").css("opacity","1");
 	iA = ["#scr1","#scr2","#scr3","#scr4","#main"];
