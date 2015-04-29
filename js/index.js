@@ -4,6 +4,7 @@ $(document).ready(function() {
 		{
 			"subject":"Mathematics I",
 			"gpa":"4.0",
+			"goal":"4.0",
 			"chartdata":[
 				{
 					"exam":"Math Test 1",
@@ -16,6 +17,7 @@ $(document).ready(function() {
 		},{
 			"subject":"Mathematics II",
 			"gpa":"4.0",
+			"goal":"4.0",
 			"chartdata":[
 				{
 					"exam":"Math Test 1",
@@ -28,6 +30,7 @@ $(document).ready(function() {
 		},{
 			"subject":"Physics",
 			"gpa":"4.0",
+			"goal":"4.0",
 			"chartdata":[
 				{
 					"exam":"Math Test 1",
@@ -42,7 +45,7 @@ $(document).ready(function() {
 
 	function chartDraw(framediv,title,chartData,chartdiv) {
 		var chart;
-		$(framediv).append("<p class='subject'>"+title+"</p>");
+		$(framediv).append("<p class='emphasis'>"+title+"</p>");
 		$(framediv).append("<div class='graph' id='"+chartdiv+"'></div>");
 		AmCharts.ready(function () {
 			// SERIAL CHART
@@ -86,7 +89,7 @@ $(document).ready(function() {
 	function subjectRead (subjects){
 		for (var i = 0;i<subjects.length;i++)
 		{
-			$("#main").append("<p class='subject'><b>"+subjects[i]["subject"]+"</b>: "+subjects[i]["gpa"]+"</p>");
+			$("#main").append("<p class='emphasis'><b>"+subjects[i]["subject"]+"</b>: "+subjects[i]["gpa"]+",<b> Goal: </b>"+subjects[i]["goal"]+"</p>");
 			chartDraw("#scr2",subjects[i]["subject"],subjects[i]["chartdata"],subjects[i]["subject"]);	
 		}
 	};
@@ -160,4 +163,18 @@ $(document).ready(function() {
 		$("#main").css("opacity","0");
 	});
 	
+	$("#scr3Submit").click(function () {
+		var exam = {"subject":$("#examSubject").val(),"exam":$("#examName").val(),"percentage":$("#examPercent").val()};
+		alert("Response recorded: For subject "+exam["subject"]+", examination name is "+exam["exam"]+" with a percentage of the final grade of "+exam["percentage"]+"%");
+		$("#examSubject").val('');
+		$("#examName").val('');
+		$("#examPercent").val('');
+	});
+	
+	$("#scr4Submit").click(function () {
+		var goal = {"subject":$("#goalSubject").val(),"goal":$("#goalGpa").val()};
+		alert("Response recorded: For subject "+goal["subject"]+", goal GPA is "+goal["goal"]);
+		$("#goalSubject").val('');
+		$("#goalGpa").val('');
+	});
 });

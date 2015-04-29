@@ -49,9 +49,9 @@ a {
 
 .hLink {
 	width: 100%;
-	height: 20%;
+	height: 12.5%;
 	float: left;
-	padding-top: 10px;
+	padding-top:30.5%;
 }
 
 .content {
@@ -70,6 +70,6 @@ a {
 	overflow-y:auto;
 }
 
-.subject {
+.emphasis {
 	font-size:150%;		
 }
