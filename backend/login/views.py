@@ -5,7 +5,7 @@ from django.http import JsonResponse
 # Create your views here.
 
 def sign_in(request):
-	render("whatever.html")
+	render("login.html")
 
 def sign_in_check(request):
 	username = request.POST["username"]
