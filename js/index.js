@@ -113,58 +113,73 @@ $(document).ready(function() {
 	$("#main").css("z-index","1");
 	$("#main").css("opacity","1");
 	iA = ["#scr1","#scr2","#scr3","#scr4","#main"];
+	iL = ["#hl1","#hl2","#hl3","#hl4","#ml"];
 	
 	$("#ml").click(function () {
 		$("#main").css("z-index","1");
 		$("#main").css("opacity","1");
+		$("#ml").css("color","white");
 		for (var i = 3;i>=0;i--) {
 			$(iA[i]).css("z-index","0");
 			$(iA[i]).css("opacity","0");
+			$(iL[i]).css("color","#626A72");
 		}
 	});
 	
 	$("#hl1").click(function () {
 		$("#scr1").css("z-index","1");
 		$("#scr1").css("opacity","1");
+		$("#hl1").css("color","white");
 		for (var i = 1;i<5;i++) {
 			$(iA[i]).css("z-index","0");
 			$(iA[i]).css("opacity","0");
+			$(iL[i]).css("color","#626A72");
 		}
 	});
 	
 	$("#hl2").click(function () {
 		$("#scr2").css("z-index","1");
 		$("#scr2").css("opacity","1");
+		$("#hl2").css("color","white");
 		for (var i = 2;i<5;i++) {
 			$(iA[i]).css("z-index","0");
 			$(iA[i]).css("opacity","0");
+			$(iL[i]).css("color","#626A72");
 		}
 		$("#scr1").css("z-index","0");
 		$("#scr1").css("opacity","0");
+		$("#hl1").css("color","#626A72");
 	});
 	
 	$("#hl3").click(function () {
 		$("#scr3").css("z-index","1");
 		$("#scr3").css("opacity","1");
+		$("#hl3").css("color","white");
 		for (var i = 1;i>0;i--) {
 			$(iA[i]).css("z-index","0");
 			$(iA[i]).css("opacity","0");
+			$(iL[i]).css("color","#626A72");
 		}
 		$("#scr4").css("z-index","0");
 		$("#scr4").css("opacity","0");
+		$("#hl4").css("color","#626A72");
 		$("#main").css("z-index","0");
 		$("#main").css("opacity","0");
+		$("#ml").css("color","#626A72");
 	});
 	
 	$("#hl4").click(function () {
 		$("#scr4").css("z-index","1");
 		$("#scr4").css("opacity","1");
+		$("#hl4").css("color","white");
 		for (var i = 2;i>0;i--) {
 			$(iA[i]).css("z-index","0");
 			$(iA[i]).css("opacity","0");
+			$(iL[i]).css("color","#626A72");
 		}
 		$("#main").css("z-index","0");
 		$("#main").css("opacity","0");
+		$("#ml").css("color","#626A72");
 	});
 	
 	$("#scr3Submit").click(function () {
