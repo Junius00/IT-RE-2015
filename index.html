@@ -2,16 +2,22 @@
 <head>
 <link rel="stylesheet" href="style.css" />
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-<script src="js/pouchdb-3.3.1.min.js"></script>
 <script src="js/jquery-1.11.2.min.js"></script>
 <script src="js/amcharts/amcharts.js"></script>
 <script src="js/amcharts/serial.js"></script>
 <script src="js/index.js"></script>
+<title>riTracker</title>
+<link rel="icon" href="img/favicon.ico">
 </head>
 <body>
-<div class="header" id="ml">
-    <h1 class="title">riTracker</h1>
-</div>
+	<div class="navBar">
+		<div class="hLink title" id="ml"><p class="hText">riTracker</p></div> 
+		<div class="hLink" id="hl1"><p class="hText">Exams Next</p></div>
+		<div class="hLink" id="hl2"><p class="hText">Trends</p></div>
+		<div class="hLink" id="hl3"><p class="hText">Add Exams</p></div>
+		<div class="hLink" id="hl4"><p class="hText">Goals</p></div>
+	</div>
+	
     <div class="content" id="main">
     
     </div>
@@ -43,13 +49,6 @@
 		<input id="goalGpa"></input><br/><br/>
 		<button id="scr4Submit">Submit</button>
     </div>
-
-<div class="navBar">
-<div class="hLink" id="hl1">Exams Next</div>
-<div class="hLink" id="hl2">Trends</div>
-<div class="hLink" id="hl3">Add Exams</div>
-<div class="hLink" id="hl4">Goals</div>
-</div>
 
 </body>
 </html>
