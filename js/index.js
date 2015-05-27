@@ -42,7 +42,7 @@ $(document).ready(function() {
 			]
 		}
 	];
-
+	alert(subjects);
 	function chartDraw(framediv,title,chartData,chartdiv) {
 		var chart;
 		$(framediv).append("<p class='emphasis'>"+title+"</p>");
@@ -155,7 +155,7 @@ $(document).ready(function() {
 		$("#scr3").css("z-index","1");
 		$("#scr3").css("opacity","1");
 		$("#hl3").css("color","white");
-		for (var i = 1;i>0;i--) {
+		for (var i = 1;i>-1;i--) {
 			$(iA[i]).css("z-index","0");
 			$(iA[i]).css("opacity","0");
 			$(iL[i]).css("color","#626A72");
@@ -172,7 +172,7 @@ $(document).ready(function() {
 		$("#scr4").css("z-index","1");
 		$("#scr4").css("opacity","1");
 		$("#hl4").css("color","white");
-		for (var i = 2;i>0;i--) {
+		for (var i = 2;i>-1;i--) {
 			$(iA[i]).css("z-index","0");
 			$(iA[i]).css("opacity","0");
 			$(iL[i]).css("color","#626A72");
@@ -183,17 +183,110 @@ $(document).ready(function() {
 	});
 	
 	$("#scr3Submit").click(function () {
-		var exam = {"subject":$("#examSubject").val(),"exam":$("#examName").val(),"percentage":$("#examPercent").val()};
-		alert("Response recorded: For subject "+exam["subject"]+", examination name is "+exam["exam"]+" with a percentage of the final grade of "+exam["percentage"]+"%");
+		var subject = $("#examSubject").val();
+		var name = $("#examName").val();
+		var percent = $("#examPercent").val();
+		var count = 0;
+		var err = false;
+		var errAlert = "";
+		for (var i = 0;i < subjects.length;i++)
+		{
+			if (subject == subjects[i]["subject"]) break;
+			else count++;	
+		}
+		if (count == subjects.length&&$("#newSub3").prop("checked")==false)
+		{
+			errAlert += "Subject not found in list.\n";
+			err = true;	
+		}
+		if (isNaN(percent)||percent == '')
+		{
+			errAlert += "Percentage entered is not a number or no percentage entered.\n";
+			err = true;	
+		}
 		$("#examSubject").val('');
 		$("#examName").val('');
 		$("#examPercent").val('');
+		if (err == false)
+		{
+			var exam = {"subject":subject,"exam":name,"percentage":percent};
+			alert("Response recorded: For subject "+exam["subject"]+", examination name is "+exam["exam"]+" with a percentage of the final grade of "+exam["percentage"]+"%");
+		}
+		else alert(errAlert);
+	});
+	
+	$("#recSubmit").click(function () {
+		var subject = $("#recSubject").val();
+		var name = $("#recName").val();
+		var mark = parseInt($("#recMark").val());
+		var total = parseInt($("#recTotal").val());
+		var percent = mark/total*100;
+		var count = 0;
+		var err = false;
+		var errAlert = "";
+		for (var i = 0;i < subjects.length;i++)
+		{
+			if (subject == subjects[i]["subject"]) break;
+			else count++;	
+		}
+		if (count == subjects.length)
+		{
+			errAlert += "Subject not found in list.\n";
+			err = true;	
+		}
+		if (isNaN(mark)||isNaN(total)||mark == ''||total == '')
+		{
+			errAlert += "Numbers entered are not numbers or no numbers entered.\n";
+			err = true;	
+		}
+		$("#recSubject").val('');
+		$("#recName").val('');
+		$("#recMark").val('');
+		$("#recTotal").val('');
+		if (err == false)
+		{
+			for (var a = 0;a < subjects.length;a++)
+			{
+				if (subject == subjects[a]["subject"])
+				{
+					subjects[a]["chartdata"].push({"exam":name,"percentage":percent});	
+					alert(subjects[a]["chartdata"]);
+					break;
+				}	
+			}
+			alert("Response recorded: For subject "+subject+", examination name is "+name+" with a mark of "+mark+" out of "+total+".");
+		}
+		else alert(errAlert);
 	});
 	
 	$("#scr4Submit").click(function () {
-		var goal = {"subject":$("#goalSubject").val(),"goal":$("#goalGpa").val()};
-		alert("Response recorded: For subject "+goal["subject"]+", goal GPA is "+goal["goal"]);
+		var subject = $("#goalSubject").val();
+		var gpa = $("#goalGpa").val();
+		var count = 0;
+		var err = false;
+		var errAlert = "";
+		for (var i = 0;i < subjects.length;i++)
+		{
+			if (subject == subjects[i]["subject"]) break;
+			else count++;	
+		}
+		if (count == subjects.length&&$("#newSub4").prop("checked")==false)
+		{
+			errAlert += "Subject not found in list.\n";
+			err = true;	
+		}
+		if (isNaN(gpa)||gpa == '')
+		{
+			errAlert += "Percentage entered is not a number or no percentage entered.\n";
+			err = true;	
+		}
 		$("#goalSubject").val('');
 		$("#goalGpa").val('');
+		if (err == false)
+		{
+			alert("Response recorded: For subject "+goal["subject"]+", goal GPA is "+goal["goal"]);
+			var goal = {"subject":$("#goalSubject").val(),"goal":$("#goalGpa").val()};	
+		}
+		else alert(errAlert);
 	});
 });
