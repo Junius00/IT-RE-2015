@@ -99,9 +99,10 @@ $(document).ready(function() {
 	
 	function subjectRead (subjects){
 		$("#scr2").html("");
+		$("#display").html("");
 		for (var i = 0;i<subjects.length;i++)
 		{
-			$("#main").append("<p class='emphasis'>"+subjects[i]["subject"]+": </p><p><b>Current: </b>"+subjects[i]["gpa"]+",<b> Goal: </b>"+subjects[i]["goal"]+"</p>");
+			$("#display").append("<p class='emphasis'>"+subjects[i]["subject"]+": </p><p><b>Current: </b>"+subjects[i]["gpa"]+",<b> Goal: </b>"+subjects[i]["goal"]+"</p>");
 			chartDraw("#scr2",subjects[i]["subject"],subjects[i]["chartdata"],subjects[i]["subject"]);	
 		}
 	};
@@ -123,7 +124,7 @@ $(document).ready(function() {
 	iA = ["#scr1","#scr2","#scr3","#scr4","#main"];
 	iL = ["#hl1","#hl2","#hl3","#hl4","#ml"];
 	
-	$("#refresh").click(function () {
+	function testing() {
 		testing.html("");
 		for (var i = 0;i < subjects.length;i++)
 		{
@@ -138,6 +139,10 @@ $(document).ready(function() {
 			}
 			testing.append("<br/>");
 		}
+	}
+	
+	$("#refresh").click(function () {
+		//testing();
 		subjectRead(subjects);
 	});
 	$("#ml").click(function () {
@@ -235,14 +240,13 @@ $(document).ready(function() {
 		$("#examSubject").val('');
 		$("#examName").val('');
 		$("#examPercent").val('');
-		$('#newSub3').prop('checked', false);
 		if (err == false)
 		{
 			var exam = {"subject":subject,"exam":name,"percentage":percent};
 			alert("Response recorded: For subject "+exam["subject"]+", examination name is "+exam["exam"]+" with a percentage of the final grade of "+exam["percentage"]+"%");
-			if ($("#newSub3").prop("checked"))
+			if ($("#newSub").prop("checked"))
 			{
-				subjects.push({"subject":subject,"gpa":"0","goal":"0",chartdata:[{"exam":name,"weight":percent}]})
+				subjects.push({"subject":subject,"gpa":"0","goal":"0","chartdata":[{"exam":name,"weight":percent}]});
 			}
 			else
 			{
@@ -256,6 +260,7 @@ $(document).ready(function() {
 			}
 		}
 		else alert(errAlert);
+		$('#newSub').prop('checked', false);
 	});
 	
 	$("#recSubmit").click(function () {
@@ -318,7 +323,6 @@ $(document).ready(function() {
 		{
 			if (subject == subjects[i]["subject"]) {
 				subjectIndex = i;
-				alert(subjectIndex);
 				break;
 			} 
 			else count++;	
