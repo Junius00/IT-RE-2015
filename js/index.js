@@ -1,5 +1,6 @@
 $(document).ready(function() {
 	//functions and variables
+	var testing = $("#testing");
 	var subjects = [
 		{
 			"subject":"Mathematics I",
@@ -8,10 +9,12 @@ $(document).ready(function() {
 			"chartdata":[
 				{
 					"exam":"Math Test 1",
-					"percentage":73	
+					"percentage":73,
+					"weight":3
 				},{
 					"exam":"Math Test 2",
-					"percentage":97
+					"percentage":97,
+					"weight":3
 				}
 			]
 		},{
@@ -21,10 +24,12 @@ $(document).ready(function() {
 			"chartdata":[
 				{
 					"exam":"Math Test 1",
-					"percentage":73	
+					"percentage":73,
+					"weight":3
 				},{
 					"exam":"Math Test 2",
-					"percentage":97
+					"percentage":97,
+					"weight":3
 				}
 			]
 		},{
@@ -34,10 +39,12 @@ $(document).ready(function() {
 			"chartdata":[
 				{
 					"exam":"Math Test 1",
-					"percentage":73	
+					"percentage":73,
+					"weight":3
 				},{
 					"exam":"Math Test 2",
-					"percentage":97
+					"percentage":97,
+					"weight":3
 				}
 			]
 		}
@@ -91,9 +98,11 @@ $(document).ready(function() {
 	}
 	
 	function subjectRead (subjects){
+		$("#scr2").html("");
+		$("#display").html("");
 		for (var i = 0;i<subjects.length;i++)
 		{
-			$("#main").append("<p class='emphasis'>"+subjects[i]["subject"]+": </p><p><b>Current: </b>"+subjects[i]["gpa"]+",<b> Goal: </b>"+subjects[i]["goal"]+"</p>");
+			$("#display").append("<p class='emphasis'>"+subjects[i]["subject"]+": </p><p><b>Current: </b>"+subjects[i]["gpa"]+",<b> Goal: </b>"+subjects[i]["goal"]+"</p>");
 			chartDraw("#scr2",subjects[i]["subject"],subjects[i]["chartdata"],subjects[i]["subject"]);	
 		}
 	};
@@ -115,6 +124,27 @@ $(document).ready(function() {
 	iA = ["#scr1","#scr2","#scr3","#scr4","#main"];
 	iL = ["#hl1","#hl2","#hl3","#hl4","#ml"];
 	
+	function testing() {
+		testing.html("");
+		for (var i = 0;i < subjects.length;i++)
+		{
+			testing.append("Subject: "+subjects[i]["subject"]+"<br/>");
+			testing.append("GPA: "+subjects[i]["gpa"]+"<br/>");
+			testing.append("Goal: "+subjects[i]["goal"]+"<br/>");
+			for (var a = 0;a < subjects[i]["chartdata"].length;a++)
+			{
+				testing.append("Examination: "+subjects[i]["chartdata"][a]["exam"]+"<br/>");
+				testing.append("Percentage: "+subjects[i]["chartdata"][a]["percentage"]+"<br/>");
+				testing.append("Weightage: "+subjects[i]["chartdata"][a]["weight"]+"<br/>");
+			}
+			testing.append("<br/>");
+		}
+	}
+	
+	$("#refresh").click(function () {
+		//testing();
+		subjectRead(subjects);
+	});
 	$("#ml").click(function () {
 		$("#main").css("z-index","1");
 		$("#main").css("opacity","1");
@@ -155,7 +185,7 @@ $(document).ready(function() {
 		$("#scr3").css("z-index","1");
 		$("#scr3").css("opacity","1");
 		$("#hl3").css("color","white");
-		for (var i = 1;i>0;i--) {
+		for (var i = 1;i>-1;i--) {
 			$(iA[i]).css("z-index","0");
 			$(iA[i]).css("opacity","0");
 			$(iL[i]).css("color","#626A72");
@@ -172,7 +202,7 @@ $(document).ready(function() {
 		$("#scr4").css("z-index","1");
 		$("#scr4").css("opacity","1");
 		$("#hl4").css("color","white");
-		for (var i = 2;i>0;i--) {
+		for (var i = 2;i>-1;i--) {
 			$(iA[i]).css("z-index","0");
 			$(iA[i]).css("opacity","0");
 			$(iL[i]).css("color","#626A72");
@@ -183,17 +213,141 @@ $(document).ready(function() {
 	});
 	
 	$("#scr3Submit").click(function () {
-		var exam = {"subject":$("#examSubject").val(),"exam":$("#examName").val(),"percentage":$("#examPercent").val()};
-		alert("Response recorded: For subject "+exam["subject"]+", examination name is "+exam["exam"]+" with a percentage of the final grade of "+exam["percentage"]+"%");
+		var subject = $("#examSubject").val();
+		var name = $("#examName").val();
+		var percent = $("#examPercent").val();
+		var count = 0;
+		var err = false;
+		var errAlert = "";
+		for (var i = 0;i < subjects.length;i++)
+		{
+			if (subject == subjects[i]["subject"]){
+				var subjectIndex = i;
+				 break;
+			}
+			else count++;	
+		}
+		if (count == subjects.length&&$("#newSub3").prop("checked")==false)
+		{
+			errAlert += "Subject not found in list.\n";
+			err = true;	
+		}
+		if (isNaN(percent)||percent == '')
+		{
+			errAlert += "Percentage entered is not a number or no percentage entered.\n";
+			err = true;	
+		}
 		$("#examSubject").val('');
 		$("#examName").val('');
 		$("#examPercent").val('');
+		if (err == false)
+		{
+			var exam = {"subject":subject,"exam":name,"percentage":percent};
+			alert("Response recorded: For subject "+exam["subject"]+", examination name is "+exam["exam"]+" with a percentage of the final grade of "+exam["percentage"]+"%");
+			if ($("#newSub").prop("checked"))
+			{
+				subjects.push({"subject":subject,"gpa":"0","goal":"0","chartdata":[{"exam":name,"weight":percent}]});
+			}
+			else
+			{
+				for (var a = 0;a < subjects.length;a++)
+				{
+					if (subject == subjects[a]["subject"])
+					{
+						subjects[a]["chartdata"].push({"exam":name,"weight":percent});
+					}	
+				}
+			}
+		}
+		else alert(errAlert);
+		$('#newSub').prop('checked', false);
+	});
+	
+	$("#recSubmit").click(function () {
+		var subject = $("#recSubject").val();
+		var name = $("#recName").val();
+		var mark = parseInt($("#recMark").val());
+		var total = parseInt($("#recTotal").val());
+		var percent = mark/total*100;
+		var count = 0;
+		var err = false;
+		var errAlert = "";
+		for (var i = 0;i < subjects.length;i++)
+		{
+			if (subject == subjects[i]["subject"]) break;
+			else count++;	
+		}
+		if (count == subjects.length)
+		{
+			errAlert += "Subject not found in list.\n";
+			err = true;	
+		}
+		if (isNaN(mark)||isNaN(total)||mark == ''||total == '')
+		{
+			errAlert += "Numbers entered are not numbers or no numbers entered.\n";
+			err = true;	
+		}
+		$("#recSubject").val('');
+		$("#recName").val('');
+		$("#recMark").val('');
+		$("#recTotal").val('');
+		if (err == false)
+		{
+			for (var a = 0;a < subjects.length;a++)
+			{
+				if (subject == subjects[a]["subject"])
+				{
+					for (var i = 0;i < subjects[a]["chartdata"].length;i++)
+					{
+						if (subjects[a]["chartdata"][i]["exam"] == name)
+						{
+							subjects[a]["chartdata"][i]["percentage"] = percent;
+						}
+					}
+				}	
+			}
+			alert("Response recorded: For subject "+subject+", examination name is "+name+" with a mark of "+mark+" out of "+total+".");
+		}
+		else alert(errAlert);
 	});
 	
 	$("#scr4Submit").click(function () {
-		var goal = {"subject":$("#goalSubject").val(),"goal":$("#goalGpa").val()};
-		alert("Response recorded: For subject "+goal["subject"]+", goal GPA is "+goal["goal"]);
+		var validGpa = ["0.8","1.2","1.6","2.0","2.4","2.8","3.2","3.6","4.0"];
+		var subject = $("#goalSubject").val();
+		var gpa = $("#goalGpa").val();
+		var count = 0;
+		var err = false;
+		var errAlert = "";
+		var subjectIndex = 0;
+		for (var i = 0;i < subjects.length;i++)
+		{
+			if (subject == subjects[i]["subject"]) {
+				subjectIndex = i;
+				break;
+			} 
+			else count++;	
+		}
+		if (count == subjects.length)
+		{
+			errAlert += "Subject not found in list.\n";
+			err = true;	
+		}
+		if (isNaN(gpa)||gpa == ''||$.inArray(gpa,validGpa)<0)
+		{
+			errAlert += "GPA entered is not valid or no GPA entered.\n";
+			err = true;	
+		}
 		$("#goalSubject").val('');
 		$("#goalGpa").val('');
+		if (err == false)
+		{
+			var goal = {"subject":subject,"goal":gpa};
+			alert("Response recorded: For subject "+goal["subject"]+", goal GPA is "+goal["goal"]);
+			subjects[subjectIndex]["goal"] = gpa;
+		}
+		else alert(errAlert);
+	});
+	$(window).unload(function () {
+		//XML send
 	});
 });

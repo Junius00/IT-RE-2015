@@ -14,12 +14,14 @@
 		<div class="hLink title" id="ml"><p class="hText">riTracker</p></div> 
 		<div class="hLink" id="hl1"><p class="hText">Exams Next</p></div>
 		<div class="hLink" id="hl2"><p class="hText">Trends</p></div>
-		<div class="hLink" id="hl3"><p class="hText">Add Exams</p></div>
+		<div class="hLink" id="hl3"><p class="hText">Manage Exams</p></div>
 		<div class="hLink" id="hl4"><p class="hText">Goals</p></div>
 	</div>
 	
     <div class="content" id="main">
-    
+		<button id="refresh">In-built Refresh</button>
+		<p id = "testing"></p>
+        <div id="display"></div>
     </div>
 
     <div class="content" id="scr1">
@@ -33,18 +35,31 @@
     <div class="content" id="scr3">
 		<p class="emphasis">Add an examination: </p>
 		<p>Subject of Examination: </p>
-		<input id="examSubject"></input>
+		<input id="examSubject"></input><br/>
+        <input type="checkbox" id="newSub">Tick if this is a new subject.</input>
 		<p>Name of Examination: </p>
 		<input id="examName"></input>
 		<p>Percentage of Examination of Final Grade: </p>
 		<input id="examPercent"></input><br/><br/>
 		<button id="scr3Submit">Submit</button>
+        
+        <p class="emphasis">Add an examination score: </p>
+		<p>Subject of Examination: </p>
+		<input id="recSubject"></input><br/>
+		<p>Name of Examination: </p>
+		<input id="recName"></input>
+        <p>Mark gotten: </p>
+        <input id="recMark"></input>
+		<p>Full mark of examination: </p>
+		<input id="recTotal"></input><br/><br/>
+		<button id="recSubmit">Submit</button>
+		<p id="display"></p>
     </div>
     
     <div class="content" id="scr4">
 		<p class="emphasis">Add a subject GPA goal: </p>
 		<p>Subject: </p>
-		<input id="goalSubject"></input>
+		<input id="goalSubject"></input><br>
 		<p>GPA Goal: </p>
 		<input id="goalGpa"></input><br/><br/>
 		<button id="scr4Submit">Submit</button>
