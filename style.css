@@ -7,12 +7,20 @@ body {
 	color:#626A72;
 }
 
+text.uv-axes-label.cal {
+	fill: #FFFFFF;
+}
+
+text {
+	fill:#FFFFFF;
+}
 a {
 	/*color:white;*/
 	text-decoration:none;
 }
 
 .graph {
+	background-color:;
 	width:100%;
 	height:50%;	
 }
@@ -60,6 +68,7 @@ a {
 	background-color: #0E161F;
 	z-index:0;
 	opacity:0;
+	overflow-x:hidden;
 	overflow-y:auto;
 }
 

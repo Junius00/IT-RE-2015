@@ -3,8 +3,8 @@
 <link rel="stylesheet" href="style.css" />
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
 <script src="js/jquery-1.11.2.min.js"></script>
-<script src="js/amcharts/amcharts.js"></script>
-<script src="js/amcharts/serial.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.2.2/d3.v3.min.js"></script>
+<script src="js/uvcharts.min.js"></script>
 <script src="js/index.js"></script>
 <title>riTracker</title>
 <link rel="icon" href="img/favicon.ico">
@@ -19,9 +19,6 @@
 	</div>
 	
     <div class="content" id="main">
-		<button id="refresh">In-built Refresh</button>
-		<p id = "testing"></p>
-        <div id="display"></div>
     </div>
 
     <div class="content" id="scr1">
@@ -43,7 +40,7 @@
 		<input id="examPercent"></input><br/><br/>
 		<button id="scr3Submit">Submit</button>
         
-        <p class="emphasis">Add an examination score: </p>
+        <p class="emphasis">Set an examination score: </p>
 		<p>Subject of Examination: </p>
 		<input id="recSubject"></input><br/>
 		<p>Name of Examination: </p>
@@ -57,7 +54,7 @@
     </div>
     
     <div class="content" id="scr4">
-		<p class="emphasis">Add a subject GPA goal: </p>
+		<p class="emphasis">Set a subject GPA goal: </p>
 		<p>Subject: </p>
 		<input id="goalSubject"></input><br>
 		<p>GPA Goal: </p>
