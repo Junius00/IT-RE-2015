@@ -1,11 +1,65 @@
-from django.shortcuts import render
-from django.http import JsonResponse
-from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse, HttpResponse
+from math import ceil, floor
+from .models import Subjects
 
 # Create your views here.
 
-@login_required
-def overview(request):
-	
 
-	
+def index(request):
+    all_subjects = Subjects.objects.all()
+    jsontemp = {
+        "subject": "",
+        "gpa": "",
+        "goal": "4.0",
+        "chartdata": []
+    }
+
+    chartdart_temp = {
+        "exam": "",
+        "percentage": 0,
+        "weight": 0
+    }
+
+    jsonrsp = []
+
+    for subject in all_subjects:
+        jsontemp["subject"] = subject.name
+        total_percentage = 0
+        gotten_percentage = 0
+
+        for exam in subject.exams_set.all():
+
+            chartdart_temp["exam"] = exam.name
+            chartdart_temp["percentage"] = exam.percentage_gotten / exam.percentage_weight * 100
+            chartdart_temp["weight"] = exam.percentage_weight
+
+            total_percentage += exam.percentage_weight
+            gotten_percentage += exam.percentage_gotten
+
+            jsontemp["chartdata"].append(chartdart_temp)
+
+        gpa = gpa_calculate(gotten_percentage / total_percentage * 100)
+        jsontemp["gpa"] = str(gpa)
+        jsonrsp.append(jsontemp)
+
+    str_json = '<p>' + str(jsonrsp) + '</p>'
+
+    return HttpResponse(str_json)
+
+
+
+def gpa_calculate(percentage):
+    """le doc"""
+    act_percentage = ceil(percentage)
+
+    if act_percentage >= 80:
+        return 4.0
+    elif act_percentage > 69 and act_percentage < 80:
+        return 3.6
+    elif act_percentage < 40:
+        return 0.8
+    elif act_percentage > 54 and act_percentage < 60:
+        return 2.4
+
+    factor = int(floor((percentage - 40) / 5))
+    return (0.4 * factor) + 1.2
