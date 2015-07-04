@@ -1,6 +1,7 @@
 from django.http import JsonResponse, HttpResponse
 from math import ceil, floor
 from .models import Subjects
+from django.shortcuts import render_to_response
 
 # Create your views here.
 
@@ -17,7 +18,8 @@ def index(request):
     chartdart_temp = {
         "exam": "",
         "percentage": 0,
-        "weight": 0
+        "weight": 0,
+        "done": None,
     }
 
     jsonrsp = []
@@ -32,9 +34,11 @@ def index(request):
             chartdart_temp["exam"] = exam.name
             chartdart_temp["percentage"] = exam.percentage_gotten / exam.percentage_weight * 100
             chartdart_temp["weight"] = exam.percentage_weight
+            chartdart_temp["done"] = exam.done
 
-            total_percentage += exam.percentage_weight
-            gotten_percentage += exam.percentage_gotten
+            if exam.done:
+                total_percentage += exam.percentage_weight
+                gotten_percentage += exam.percentage_gotten
 
             jsontemp["chartdata"].append(chartdart_temp)
 
@@ -63,3 +67,7 @@ def gpa_calculate(percentage):
 
     factor = int(floor((percentage - 40) / 5))
     return (0.4 * factor) + 1.2
+
+def home(request):
+
+	render_to_response("index.html")
