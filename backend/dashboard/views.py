@@ -1,7 +1,7 @@
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse
 from math import ceil, floor
 from .models import Subjects
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 
 # Create your views here.
 
@@ -48,8 +48,7 @@ def index(request):
 
     str_json = '<p>' + str(jsonrsp) + '</p>'
 
-    return HttpResponse(str_json)
-
+    return JsonResponse(str_json)
 
 
 def gpa_calculate(percentage):
@@ -68,6 +67,7 @@ def gpa_calculate(percentage):
     factor = int(floor((percentage - 40) / 5))
     return (0.4 * factor) + 1.2
 
+
 def home(request):
 
-	render_to_response("index.html")
+    render("index.html", request)

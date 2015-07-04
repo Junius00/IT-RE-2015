@@ -5,7 +5,7 @@ from django.db import models
 
 class Subjects(models.Model):
     name = models.CharField(max_length=255)
-    goal_gpa = models.FloatField()
+    goal_gpa = models.FloatField(default=4.0)
 
     def __unicode__(self):
         return self.name
