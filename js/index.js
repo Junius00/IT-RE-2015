@@ -1,6 +1,8 @@
 $(document).ready(function() {
 	//functions and variables
 	var examsNext = $("#scr1") ;
+	
+	//main JSON object
 	var subjects = {
 		"English":{
 			'chartdata':[
@@ -22,6 +24,7 @@ $(document).ready(function() {
 		}
 	};
 	
+	//to draw chart
 	function chartDraw(framediv,title,chartData,chartdiv) {
 		$(framediv).append("<p class='emphasis'>"+title+"</p>");
 		$(framediv).append("<div class='graph' id='"+chartdiv+"'></div>");
@@ -84,6 +87,7 @@ $(document).ready(function() {
 		var chart = uv.chart('Bar',graphdef,config);
 	}
 	
+	//to display upcoming exams and front page
 	function subjectRead (subjects){
 		$("#scr2").html("");
 		$("#main").html("");
@@ -128,12 +132,15 @@ $(document).ready(function() {
 	}
 	xmlhttp.open("POST", url, true);
 	xmlhttp.send();*/
+	
+	//loads JSON data and defaults screen to mainpage
 	subjectRead(subjects);
 	$("#main").css("z-index","1");
 	$("#main").css("opacity","1");
 	iA = ["#scr1","#scr2","#scr3","#scr4","#main"];
 	iL = ["#hl1","#hl2","#hl3","#hl4","#ml"];
 	
+	//div click functions to switch windows
 	$("#ml").click(function () {
 		subjectRead(subjects);
 		$("#main").css("z-index","1");
@@ -206,6 +213,7 @@ $(document).ready(function() {
 		$("#ml").css("color","#626A72");
 	});
 	
+	//form collection for exam addition
 	$("#scr3Submit").click(function () {
 		var subject = $("#examSubject").val();
 		var name = $("#examName").val();
@@ -250,6 +258,7 @@ $(document).ready(function() {
 		$('#newSub').prop('checked', false);
 	});
 	
+	//form collection for exam score record
 	$("#recSubmit").click(function () {
 		var subject = $("#recSubject").val();
 		var name = $("#recName").val();
@@ -296,6 +305,7 @@ $(document).ready(function() {
 		else alert(errAlert);
 	});
 	
+	//form collection for GPA goal setting
 	$("#scr4Submit").click(function () {
 		var validGpa = ["0.8","1.2","1.6","2.0","2.4","2.8","3.2","3.6","4.0"];
 		var subject = $("#goalSubject").val();
@@ -331,6 +341,8 @@ $(document).ready(function() {
 		}
 		else alert(errAlert);
 	});
+	
+	//synchronises JSON file with backend once window is left
 	$(window).unload(function () {
 		//XML send
 	});
