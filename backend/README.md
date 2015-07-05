@@ -24,4 +24,4 @@
 
         !! FYI : || means "or"
         !! NOTE: this function only authenticates the user. Please process the input with front end script
-                 before making a request
+                 before making a request# it-re-2015-backend-only
