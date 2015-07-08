@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from math import ceil, floor
 from .models import Subjects
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 # Create your views here.
 
@@ -9,7 +9,6 @@ from django.shortcuts import render
 def index(request):
     all_subjects = Subjects.objects.all()
     jsontemp = {
-        "subject": "",
         "gpa": "",
         "goal": "4.0",
         "chartdata": []
@@ -22,17 +21,19 @@ def index(request):
         "done": None,
     }
 
-    jsonrsp = []
+    jsonrsp = {}
 
     for subject in all_subjects:
-        jsontemp["subject"] = subject.name
+        jsonrsp[subject.name] = jsontemp
         total_percentage = 0
         gotten_percentage = 0
 
         for exam in subject.exams_set.all():
 
             chartdart_temp["exam"] = exam.name
-            chartdart_temp["percentage"] = exam.percentage_gotten / exam.percentage_weight * 100
+            chartdart_temp["percentage"] = (exam.percentage_gotten /
+                                            exam.percentage_weight * 100)
+
             chartdart_temp["weight"] = exam.percentage_weight
             chartdart_temp["done"] = exam.done
 
@@ -40,15 +41,14 @@ def index(request):
                 total_percentage += exam.percentage_weight
                 gotten_percentage += exam.percentage_gotten
 
-            jsontemp["chartdata"].append(chartdart_temp)
+            jsonrsp[subject.name]["chartdata"].append(chartdart_temp)
 
         gpa = gpa_calculate(gotten_percentage / total_percentage * 100)
-        jsontemp["gpa"] = str(gpa)
-        jsonrsp.append(jsontemp)
+        jsonrsp[subject.name]["gpa"] = str(gpa)
 
-    str_json = '<p>' + str(jsonrsp) + '</p>'
+    # str_json = '<p>' + str(jsonrsp) + '</p>'
 
-    return JsonResponse(str_json)
+    return JsonResponse(jsonrsp, safe=False)
 
 
 def gpa_calculate(percentage):
@@ -70,4 +70,8 @@ def gpa_calculate(percentage):
 
 def home(request):
 
-    render("index.html", request)
+    return render(request, "index.html")
+
+
+def form(request):
+    pass
