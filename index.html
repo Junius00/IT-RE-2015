@@ -1,7 +1,7 @@
 <html>
 <head>
 <link rel="stylesheet" href="style.css" />
-<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
 <script src="js/jquery-1.11.2.min.js"></script>
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.2.2/d3.v3.min.js"></script>
 <script src="js/uvcharts.min.js"></script>
@@ -10,8 +10,12 @@
 <link rel="icon" href="img/favicon.ico">
 </head>
 <body>
+	<div class='banner'>
+		<h1>riTracker.</h1>
+		<p>For your grade computing needs.</p>
+	</div>
 	<div class="navBar">
-		<div class="hLink title" id="ml"><p class="hText">riTracker</p></div> 
+		<div class="hLink title" id="ml"><p class="hText">Home</p></div> 
 		<div class="hLink" id="hl1"><p class="hText">Exams Next</p></div>
 		<div class="hLink" id="hl2"><p class="hText">Trends</p></div>
 		<div class="hLink" id="hl3"><p class="hText">Manage Exams</p></div>
@@ -32,34 +36,34 @@
     <div class="content" id="scr3">
 		<p class="emphasis">Add an examination: </p>
 		<p>Subject of Examination: </p>
-		<input id="examSubject"></input><br/>
+		<input class='input' id="examSubject"></input><br/>
         <input type="checkbox" id="newSub">Tick if this is a new subject.</input>
 		<p>Name of Examination: </p>
-		<input id="examName"></input>
+		<input class='input' id="examName"></input>
 		<p>Percentage of Examination of Final Grade: </p>
-		<input id="examPercent"></input><br/><br/>
-		<button id="scr3Submit">Submit</button>
+		<input class='input' id="examPercent"></input><br/><br/>
+		<button class='button' id="scr3Submit">Submit</button>
         
         <p class="emphasis">Set an examination score: </p>
 		<p>Subject of Examination: </p>
-		<input id="recSubject"></input><br/>
+		<input class='input' id="recSubject"></input><br/>
 		<p>Name of Examination: </p>
-		<input id="recName"></input>
+		<input class='input' id="recName"></input>
         <p>Mark gotten: </p>
-        <input id="recMark"></input>
+        <input class='input' id="recMark"></input>
 		<p>Full mark of examination: </p>
-		<input id="recTotal"></input><br/><br/>
-		<button id="recSubmit">Submit</button>
+		<input class='input' id="recTotal"></input><br/><br/>
+		<button class='button' id="recSubmit">Submit</button>
 		<p id="display"></p>
     </div>
     
     <div class="content" id="scr4">
 		<p class="emphasis">Set a subject GPA goal: </p>
 		<p>Subject: </p>
-		<input id="goalSubject"></input><br>
+		<input class='input' id="goalSubject"></input><br>
 		<p>GPA Goal: </p>
-		<input id="goalGpa"></input><br/><br/>
-		<button id="scr4Submit">Submit</button>
+		<input class='input' id="goalGpa"></input><br/><br/>
+		<button class='button' id="scr4Submit">Submit</button>
     </div>
 
 </body>

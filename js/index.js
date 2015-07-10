@@ -1,29 +1,15 @@
 $(document).ready(function() {
 	//functions and variables
 	var examsNext = $("#scr1") ;
+	var subjects = {};
 	
 	//main JSON object
-	var subjects = {
-		"English":{
-			'chartdata':[
-				{
-					"exam":"MYCT",
-					"percentage":100,
-					'done':true
-				}
-			]
-		},
-		"Physics":{
-			'chartdata':[
-				{
-					"exam":"MYCT",
-					"percentage":100,
-					'done':true
-				}
-			]
-		}
-	};
+	var url = "https://it-re-2015-techatin.c9.io/index/";
 	
+	$.getJSON(url,null,function(data) {
+		subjects = $.parseJSON(data);	
+	});
+		
 	//to draw chart
 	function chartDraw(framediv,title,chartData,chartdiv) {
 		$(framediv).append("<p class='emphasis'>"+title+"</p>");
@@ -137,31 +123,46 @@ $(document).ready(function() {
 	subjectRead(subjects);
 	$("#main").css("z-index","1");
 	$("#main").css("opacity","1");
+	$("#ml").css("background-color","#8C6954");
+	$("#ml").css("color","white");
 	iA = ["#scr1","#scr2","#scr3","#scr4","#main"];
 	iL = ["#hl1","#hl2","#hl3","#hl4","#ml"];
 	
 	//div click functions to switch windows
+
 	$("#ml").click(function () {
 		subjectRead(subjects);
 		$("#main").css("z-index","1");
 		$("#main").css("opacity","1");
+		$("#ml").css("background-color","#8C6954");
 		$("#ml").css("color","white");
-		for (var i = 3;i>=0;i--) {
-			$(iA[i]).css("z-index","0");
-			$(iA[i]).css("opacity","0");
-			$(iL[i]).css("color","#626A72");
-		}
+		for (var a = 0;a < 5;a++)
+			{
+				if (iL[a]!='#ml')
+				{
+					$(iA[a]).css("z-index","0");
+					$(iA[a]).css("opacity","0");
+					$(iL[a]).css('background-color','#59323C');
+					$(iL[a]).css("color","#F2EEB3");
+				}
+			}
 	});
 	
 	$("#hl1").click(function () {
 		subjectRead(subjects);
 		$("#scr1").css("z-index","1");
 		$("#scr1").css("opacity","1");
+		$('#hl1').css('background-color','#8C6954');
 		$("#hl1").css("color","white");
-		for (var i = 1;i<5;i++) {
-			$(iA[i]).css("z-index","0");
-			$(iA[i]).css("opacity","0");
-			$(iL[i]).css("color","#626A72");
+		for (var a = 0;a < 5;a++)
+		{
+			if (iL[a]!='#hl1')
+			{
+				$(iA[a]).css("z-index","0");
+				$(iA[a]).css("opacity","0");
+				$(iL[a]).css('background-color','#59323C');
+				$(iL[a]).css("color","#F2EEB3");
+			}
 		}
 	});
 	
@@ -169,48 +170,54 @@ $(document).ready(function() {
 		subjectRead(subjects);
 		$("#scr2").css("z-index","1");
 		$("#scr2").css("opacity","1");
+		$('#hl2').css('background-color','#8C6954');
 		$("#hl2").css("color","white");
-		for (var i = 2;i<5;i++) {
-			$(iA[i]).css("z-index","0");
-			$(iA[i]).css("opacity","0");
-			$(iL[i]).css("color","#626A72");
+		for (var a = 0;a < 5;a++)
+		{
+			if (iL[a]!='#hl2')
+			{
+				$(iA[a]).css("z-index","0");
+				$(iA[a]).css("opacity","0");
+				$(iL[a]).css('background-color','#59323C');
+				$(iL[a]).css("color","#F2EEB3");
+			}
 		}
-		$("#scr1").css("z-index","0");
-		$("#scr1").css("opacity","0");
-		$("#hl1").css("color","#626A72");
 	});
 	
 	$("#hl3").click(function () {
 		subjectRead(subjects);
 		$("#scr3").css("z-index","1");
 		$("#scr3").css("opacity","1");
+		$('#hl3').css('background-color','#8C6954');
 		$("#hl3").css("color","white");
-		for (var i = 1;i>-1;i--) {
-			$(iA[i]).css("z-index","0");
-			$(iA[i]).css("opacity","0");
-			$(iL[i]).css("color","#626A72");
+		for (var a = 0;a < 5;a++)
+		{
+			if (iL[a]!='#hl3')
+			{
+				$(iA[a]).css("z-index","0");
+				$(iA[a]).css("opacity","0");
+				$(iL[a]).css('background-color','#59323C');
+				$(iL[a]).css("color","#F2EEB3");
+			}
 		}
-		$("#scr4").css("z-index","0");
-		$("#scr4").css("opacity","0");
-		$("#hl4").css("color","#626A72");
-		$("#main").css("z-index","0");
-		$("#main").css("opacity","0");
-		$("#ml").css("color","#626A72");
 	});
 	
 	$("#hl4").click(function () {
 		subjectRead(subjects);
 		$("#scr4").css("z-index","1");
 		$("#scr4").css("opacity","1");
+		$('#hl4').css('background-color','#8C6954');
 		$("#hl4").css("color","white");
-		for (var i = 2;i>-1;i--) {
-			$(iA[i]).css("z-index","0");
-			$(iA[i]).css("opacity","0");
-			$(iL[i]).css("color","#626A72");
+		for (var a = 0;a < 5;a++)
+		{
+			if (iL[a]!='#hl4')
+			{
+				$(iA[a]).css("z-index","0");
+				$(iA[a]).css("opacity","0");
+				$(iL[a]).css('background-color','#59323C');
+				$(iL[a]).css("color","#F2EEB3");
+			}
 		}
-		$("#main").css("z-index","0");
-		$("#main").css("opacity","0");
-		$("#ml").css("color","#626A72");
 	});
 	
 	//form collection for exam addition
