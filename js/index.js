@@ -248,12 +248,12 @@ $(document).ready(function() {
 			if ($("#newSub").prop("checked"))
 			{
 				subjects[subject] = {"gpa":"0","goal":"0","chartdata":[{"exam":name,"weight":percent,"done":false}]};
-				$.getJSON(aurl,{'requestType':'addExam','subject':subject,'exam':name,'percentage':0,'done':false,'weight':percent},null);
+				$.post(aurl,{'requestType':'addExam','subject':subject,'exam':name,'percentage':0,'done':false,'weight':percent},null,'json');
 			}
 			else
 			{
 				subjects[subject]["chartdata"].push({"exam":name,"weight":percent,"done":false});
-				$.getJSON(aurl,{'requestType':'addExam','subject':subject,'exam':name,'percentage':0,'done':false,'weight':percent},null);
+				$.post(aurl,{'requestType':'addExam','subject':subject,'exam':name,'percentage':0,'done':false,'weight':percent},null,'json');
 			}
 		}
 		else alert(errAlert);
