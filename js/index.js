@@ -108,6 +108,25 @@ $(document).ready(function() {
 		var chart = uv.chart('Bar',graphdef,config);
 	}
 	
+	var links = {'#hl1':'#scr1','#hl2':'#scr2','#hl3':'#scr3','#hl4':'#scr4','#ml':'#main'};
+	//to process link clicking
+	function linkClick(link) {
+		subjectRead(subjects);
+		$(links[link]).css("z-index","1");
+		$(links[link]).css("opacity","1");
+		$(link).css("background-color","#8C6954");
+		$(link).css("color","white");
+		$.each(links, function (key,value)
+		{
+			if (key!=link)
+			{
+				$(links[key]).css("z-index","0");
+				$(links[key]).css("opacity","0");
+				$(key).css('background-color','#59323C');
+				$(key).css("color","#F2EEB3");
+			}
+		});
+	}
 
 	//main start up
 	//loads JSON data and defaults screen to mainpage
@@ -118,99 +137,10 @@ $(document).ready(function() {
 	$("#main").css("opacity","1");
 	$("#ml").css("background-color","#8C6954");
 	$("#ml").css("color","white");
-	iA = ["#scr1","#scr2","#scr3","#scr4","#main"];
-	iL = ["#hl1","#hl2","#hl3","#hl4","#ml"];
-	
-	//div click functions to switch windows
 
-	$("#ml").click(function () {
-		subjectRead(subjects);
-		$("#main").css("z-index","1");
-		$("#main").css("opacity","1");
-		$("#ml").css("background-color","#8C6954");
-		$("#ml").css("color","white");
-		for (var a = 0;a < 5;a++)
-			{
-				if (iL[a]!='#ml')
-				{
-					$(iA[a]).css("z-index","0");
-					$(iA[a]).css("opacity","0");
-					$(iL[a]).css('background-color','#59323C');
-					$(iL[a]).css("color","#F2EEB3");
-				}
-			}
-	});
-	
-	$("#hl1").click(function () {
-		subjectRead(subjects);
-		$("#scr1").css("z-index","1");
-		$("#scr1").css("opacity","1");
-		$('#hl1').css('background-color','#8C6954');
-		$("#hl1").css("color","white");
-		for (var a = 0;a < 5;a++)
-		{
-			if (iL[a]!='#hl1')
-			{
-				$(iA[a]).css("z-index","0");
-				$(iA[a]).css("opacity","0");
-				$(iL[a]).css('background-color','#59323C');
-				$(iL[a]).css("color","#F2EEB3");
-			}
-		}
-	});
-	
-	$("#hl2").click(function () {
-		subjectRead(subjects);
-		$("#scr2").css("z-index","1");
-		$("#scr2").css("opacity","1");
-		$('#hl2').css('background-color','#8C6954');
-		$("#hl2").css("color","white");
-		for (var a = 0;a < 5;a++)
-		{
-			if (iL[a]!='#hl2')
-			{
-				$(iA[a]).css("z-index","0");
-				$(iA[a]).css("opacity","0");
-				$(iL[a]).css('background-color','#59323C');
-				$(iL[a]).css("color","#F2EEB3");
-			}
-		}
-	});
-	
-	$("#hl3").click(function () {
-		subjectRead(subjects);
-		$("#scr3").css("z-index","1");
-		$("#scr3").css("opacity","1");
-		$('#hl3').css('background-color','#8C6954');
-		$("#hl3").css("color","white");
-		for (var a = 0;a < 5;a++)
-		{
-			if (iL[a]!='#hl3')
-			{
-				$(iA[a]).css("z-index","0");
-				$(iA[a]).css("opacity","0");
-				$(iL[a]).css('background-color','#59323C');
-				$(iL[a]).css("color","#F2EEB3");
-			}
-		}
-	});
-	
-	$("#hl4").click(function () {
-		subjectRead(subjects);
-		$("#scr4").css("z-index","1");
-		$("#scr4").css("opacity","1");
-		$('#hl4').css('background-color','#8C6954');
-		$("#hl4").css("color","white");
-		for (var a = 0;a < 5;a++)
-		{
-			if (iL[a]!='#hl4')
-			{
-				$(iA[a]).css("z-index","0");
-				$(iA[a]).css("opacity","0");
-				$(iL[a]).css('background-color','#59323C');
-				$(iL[a]).css("color","#F2EEB3");
-			}
-		}
+	//div click functions to switch windows
+	$.each(links,function (key,value) {
+		$(key).click(function() {linkClick(key)});
 	});
 	
 	//form collection for exam addition
