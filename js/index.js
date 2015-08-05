@@ -43,6 +43,7 @@ $(document).ready(function() {
 	
 	$.getJSON(url,null,function(data) {
 		subjects = data;
+		console.log(subjects);
 		subjectRead(subjects);
 	});
 		
@@ -147,7 +148,7 @@ $(document).ready(function() {
 	$("#scr3Submit").click(function () {
 		var subject = $("#examSubject").val();
 		var name = $("#examName").val();
-		var percent = $("#examPercent").val();
+		var percent = parseFloat($("#examPercent").val());
 		var count = 0;
 		var err = false;
 		var errAlert = "";
@@ -178,12 +179,14 @@ $(document).ready(function() {
 			if ($("#newSub").prop("checked"))
 			{
 				subjects[subject] = {"gpa":"0","goal":"0","chartdata":[{"exam":name,"weight":percent,"done":false}]};
-				$.post(aurl,{'requestType':'addExam','subject':subject,'exam':name,'percentage':0,'done':false,'weight':percent},null,'json');
+				$.ajax({url:aurl,type:"POST",dataType:"xml/html/script/json",contentType:"application/json",data:{"requestType":"addExam","subject":subject,"exam":name,"percentage":0,"done":0,"weight":percent},error: function (data) {alert(data);}});
+				console.log({'requestType':'addExam','subject':subject,'exam':name,'percentage':0,'done':'False','weight':percent});
 			}
 			else
 			{
 				subjects[subject]["chartdata"].push({"exam":name,"weight":percent,"done":false});
-				$.post(aurl,{'requestType':'addExam','subject':subject,'exam':name,'percentage':0,'done':false,'weight':percent},null,'json');
+				$.post(aurl,JSON.stringify({"requestType":"addExam","subject":subject,"exam":name,"percentage":0,"done":0,"weight":percent}),null,"json");
+				console.log({'requestType':'addExam','subject':subject,'exam':name,'percentage':0,'done':'False','weight':percent});
 			}
 		}
 		else alert(errAlert);
@@ -230,7 +233,7 @@ $(document).ready(function() {
 				{
 					subjects[subject]["chartdata"][i]["percentage"] = percent;
 					subjects[subject]["chartdata"][i]["done"] = true;
-					$.getJSON(aurl,{'requestType':'updateExam','subject':subject,'exam':name,'percentage':percent,'done':true,'weight':subjects[subject]['chartdata'][i]["weight"]},null);
+					$.getJSON(aurl,{'requestType':'updateExam','subject':subject,'exam':name,'percentage':percent,'done':'True','weight':subjects[subject]['chartdata'][i]["weight"]},null);
 				}
 			}
 			
