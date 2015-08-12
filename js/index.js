@@ -2,7 +2,58 @@ $(document).ready(function() {
 	//functions and variables
 	var examsNext = $("#scr1") ;
 	var subjects = {};
-
+	
+	//gpa calculation
+	function gpaCalc(subject) {
+		var weightTotal = 0;
+		var percentTotal= 0;
+		for (var i = 0;i < subjects[subject]["chartdata"].length;i++)
+		{
+			if (subjects[subject]['chartdata'][i]['done'] == true) {
+				weightTotal = weightTotal + subjects[subject]['chartdata'][i]["weight"];
+				percentTotal = percentTotal + (subjects[subject]['chartdata'][i]['percentage']/100)*subjects[subject]['chartdata'][i]['weight'];
+			}
+		}
+		
+		var gpaTotal = percentTotal/weightTotal*100;
+		if (gpaTotal >= 80)
+		{
+			subjects[subject]['gpa'] = '4.0';
+		}
+		else if (gpaTotal >= 70&&gpaTotal < 80)
+		{
+			subjects[subject]['gpa'] = '3.6';
+		}
+		else if (gpaTotal >= 65&&gpaTotal < 70)
+		{
+			subjects[subject]['gpa'] = '3.2';
+		}
+		else if (gpaTotal >= 60&&gpaTotal < 65)
+		{
+			subjects[subject]['gpa'] = '2.8';
+		}
+		else if (gpaTotal >= 55&&gpaTotal < 60)
+		{
+			subjects[subject]['gpa'] = '2.4';
+		}
+		else if (gpaTotal >= 50&&gpaTotal < 55)
+		{
+			subjects[subject]['gpa'] = '2.0';
+		}
+		else if (gpaTotal >= 45&&gpaTotal < 50)
+		{
+			subjects[subject]['gpa'] = '1.6';
+		}
+		else if (gpaTotal >= 40&&gpaTotal < 45)
+		{
+			subjects[subject]['gpa'] = '1.2';
+		}
+		else if (gpaTotal < 40)
+		{
+			subjects[subject]['gpa'] = '0.8';
+		}	
+	}
+	
 	//to display upcoming exams and front page
 	function subjectRead (subjects){
 		$("#scr2").html("");
@@ -17,6 +68,7 @@ $(document).ready(function() {
 		{
 			$.each(subjects,function (key,value)
 			{
+				gpaCalc(key);
 				$("#main").append("<p class='emphasis'>"+key+"</p><p><b>Current: </b>"+subjects[key]["gpa"]+",<b> Goal: </b>"+subjects[key]["goal"]+"</p>");
 				chartDraw("#scr2",key,subjects[key]["chartdata"],key);
 				examsNext.append("<p class='emphasis'>"+key+"</p>")
@@ -132,8 +184,6 @@ $(document).ready(function() {
 	//main start up
 	//loads JSON data and defaults screen to mainpage
 	subjectRead(subjects);
-	subjectRead(subjects);
-	subjectRead(subjects);
 	$("#main").css("z-index","1");
 	$("#main").css("opacity","1");
 	$("#ml").css("background-color","#8C6954");
@@ -179,8 +229,8 @@ $(document).ready(function() {
 			if ($("#newSub").prop("checked"))
 			{
 				subjects[subject] = {"gpa":"0","goal":"0","chartdata":[{"exam":name,"weight":percent,"done":false}]};
-				$.ajax({url:aurl,type:"POST",dataType:"xml/html/script/json",contentType:"application/json",data:{"requestType":"addExam","subject":subject,"exam":name,"percentage":0,"done":0,"weight":percent},error: function (data) {alert(data);}});
-				console.log({'requestType':'addExam','subject':subject,'exam':name,'percentage':0,'done':'False','weight':percent});
+				$.post(aurl,JSON.stringify({"requestType":"addExamNew","subject":subject,"exam":name,"percentage":0,"done":0,"weight":percent}),null,"json");
+				console.log({'requestType':'addExamNew','subject':subject,'exam':name,'percentage':0,'done':'False','weight':percent});
 			}
 			else
 			{
@@ -200,6 +250,7 @@ $(document).ready(function() {
 		var mark = parseFloat($("#recMark").val());
 		var total = parseFloat($("#recTotal").val());
 		var percent = mark/total*100;
+		alert(percent);
 		var count = 0;
 		var err = false;
 		var errAlert = "";
@@ -233,59 +284,10 @@ $(document).ready(function() {
 				{
 					subjects[subject]["chartdata"][i]["percentage"] = percent;
 					subjects[subject]["chartdata"][i]["done"] = true;
-					$.getJSON(aurl,{'requestType':'updateExam','subject':subject,'exam':name,'percentage':percent,'done':'True','weight':subjects[subject]['chartdata'][i]["weight"]},null);
+					$.post(aurl,JSON.stringify({'requestType':'updateExam','subject':subject,'exam':name,'percentage':percent,'done':'True','weight':subjects[subject]['chartdata'][i]["weight"]}),null,'json');
 				}
 			}
-			
-			var weightTotal = 0;
-			var percentTotal= 0;
-			for (var i = 0;i < subjects[subject]["chartdata"].length;i++)
-			{
-				if (subjects[subject]['chartdata'][i]['done']) {
-					weightTotal = weightTotal + subjects[subject]['chartdata'][i]["weight"];
-					percentTotal = percentTotal + subjects[subject]['chartdata'][i]['percentage']*subjects[subject]['chartdata'][i]['weight'];
-				}
-			}
-			
-			var gpaTotal = percentTotal/weightTotal;
-			alert(gpaTotal);
-			if (gpaTotal >= 80)
-			{
-				subjects[subject]['gpa'] = '4.0';
-			}
-			else if (gpaTotal >= 70&&gpaTotal < 80)
-			{
-				subjects[subject]['gpa'] = '3.6';
-			}
-			else if (gpaTotal >= 65&&gpaTotal < 70)
-			{
-				subjects[subject]['gpa'] = '3.2';
-			}
-			else if (gpaTotal >= 60&&gpaTotal < 65)
-			{
-				subjects[subject]['gpa'] = '2.8';
-			}
-			else if (gpaTotal >= 55&&gpaTotal < 60)
-			{
-				subjects[subject]['gpa'] = '2.4';
-			}
-			else if (gpaTotal >= 50&&gpaTotal < 55)
-			{
-				subjects[subject]['gpa'] = '2.0';
-			}
-			else if (gpaTotal >= 45&&gpaTotal < 50)
-			{
-				subjects[subject]['gpa'] = '1.6';
-			}
-			else if (gpaTotal >= 40&&gpaTotal < 45)
-			{
-				subjects[subject]['gpa'] = '1.2';
-			}
-			else if (gpaTotal < 40)
-			{
-				subjects[subject]['gpa'] = '0.8';
-			}
-			
+			gpaCalc(subject);
 			alert("Response recorded: For subject "+subject+", examination name is "+name+" with a mark of "+mark+" out of "+total+".");
 		}
 		else alert(errAlert);
@@ -324,7 +326,7 @@ $(document).ready(function() {
 			var goal = {"subject":subject,"goal":gpa};
 			alert("Response recorded: For subject "+goal["subject"]+", goal GPA is "+goal["goal"]);
 			subjects[subject]["goal"] = gpa;
-			$.getJSON(url,{'requestType':'goal','subject':subject,'goal':gpa},null);
+			$.post(aurl,JSON.stringify({'requestType':'goal','subject':subject,'goal':gpa}),null,'json');
 		}
 		else alert(errAlert);
 	});
