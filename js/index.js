@@ -1,29 +1,104 @@
 $(document).ready(function() {
 	//functions and variables
 	var examsNext = $("#scr1") ;
+	var subjects = {};
 	
-	//main JSON object
-	var subjects = {
-		"English":{
-			'chartdata':[
+	//gpa calculation
+	function gpaCalc(subject) {
+		var weightTotal = 0;
+		var percentTotal= 0;
+		for (var i = 0;i < subjects[subject]["chartdata"].length;i++)
+		{
+			if (subjects[subject]['chartdata'][i]['done'] == true) {
+				weightTotal = weightTotal + subjects[subject]['chartdata'][i]["weight"];
+				percentTotal = percentTotal + (subjects[subject]['chartdata'][i]['percentage']/100)*subjects[subject]['chartdata'][i]['weight'];
+			}
+		}
+		
+		var gpaTotal = percentTotal/weightTotal*100;
+		if (gpaTotal >= 80)
+		{
+			subjects[subject]['gpa'] = '4.0';
+		}
+		else if (gpaTotal >= 70&&gpaTotal < 80)
+		{
+			subjects[subject]['gpa'] = '3.6';
+		}
+		else if (gpaTotal >= 65&&gpaTotal < 70)
+		{
+			subjects[subject]['gpa'] = '3.2';
+		}
+		else if (gpaTotal >= 60&&gpaTotal < 65)
+		{
+			subjects[subject]['gpa'] = '2.8';
+		}
+		else if (gpaTotal >= 55&&gpaTotal < 60)
+		{
+			subjects[subject]['gpa'] = '2.4';
+		}
+		else if (gpaTotal >= 50&&gpaTotal < 55)
+		{
+			subjects[subject]['gpa'] = '2.0';
+		}
+		else if (gpaTotal >= 45&&gpaTotal < 50)
+		{
+			subjects[subject]['gpa'] = '1.6';
+		}
+		else if (gpaTotal >= 40&&gpaTotal < 45)
+		{
+			subjects[subject]['gpa'] = '1.2';
+		}
+		else if (gpaTotal < 40)
+		{
+			subjects[subject]['gpa'] = '0.8';
+		}	
+	}
+	
+	//to display upcoming exams and front page
+	function subjectRead (subjects){
+		$("#scr2").html("");
+		$("#main").html("");
+		examsNext.html("");
+		if (subjects.length == 0)
+		{
+			$("#main").append("<p class='emphasis'>No subjects yet!</p><p>Go to 'Manage Exams' to add a new subject.");
+			examsNext.append("<p class='emphasis'>No subjects yet!</p><p>Go to 'Manage Exams' to add a new subject.");
+		}
+		else
+		{
+			$.each(subjects,function (key,value)
+			{
+				gpaCalc(key);
+				$("#main").append("<p class='emphasis'>"+key+"</p><p><b>Current: </b>"+subjects[key]["gpa"]+",<b> Goal: </b>"+subjects[key]["goal"]+"</p>");
+				chartDraw("#scr2",key,subjects[key]["chartdata"],key);
+				examsNext.append("<p class='emphasis'>"+key+"</p>")
+				var count = 0;
+				for (var a = 0;a<subjects[key]["chartdata"].length;a++)
 				{
-					"exam":"MYCT",
-					"percentage":100,
-					'done':true
+					if (subjects[key]["chartdata"][a]["done"] == false)
+					{
+						examsNext.append("<p><b>"+subjects[key]["chartdata"][a]["exam"]+"</b>, "+subjects[key]["chartdata"][a]["weight"]+"% of final grade");
+						count++;
+					}
 				}
-			]
-		},
-		"Physics":{
-			'chartdata':[
+				if (count == 0)
 				{
-					"exam":"MYCT",
-					"percentage":100,
-					'done':true
+					examsNext.append("<p><b>None</b></p>")
 				}
-			]
+			});
 		}
 	};
 	
+	//main JSON object
+	var url = "https://it-re-2015-techatin.c9.io/index/";
+	var aurl = "https://it-re-2015-techatin.c9.io/add/";
+	
+	$.getJSON(url,null,function(data) {
+		subjects = data;
+		console.log(subjects);
+		subjectRead(subjects);
+	});
+		
 	//to draw chart
 	function chartDraw(framediv,title,chartData,chartdiv) {
 		$(framediv).append("<p class='emphasis'>"+title+"</p>");
@@ -76,7 +151,6 @@ $(document).ready(function() {
 				textcolor:"#FFFFFF"
 			}
 		};
-		console.log($(".graph").css("width").split("px")[0]);
 		for (var i = 0;i<chartData.length;i++)
 		{
 			if (chartData[i]['done'])
@@ -87,137 +161,44 @@ $(document).ready(function() {
 		var chart = uv.chart('Bar',graphdef,config);
 	}
 	
-	//to display upcoming exams and front page
-	function subjectRead (subjects){
-		$("#scr2").html("");
-		$("#main").html("");
-		examsNext.html("");
-		if (subjects.length == 0)
+	var links = {'#hl1':'#scr1','#hl2':'#scr2','#hl3':'#scr3','#hl4':'#scr4','#ml':'#main'};
+	//to process link clicking
+	function linkClick(link) {
+		subjectRead(subjects);
+		$(links[link]).css("z-index","1");
+		$(links[link]).css("opacity","1");
+		$(link).css("background-color","#8C6954");
+		$(link).css("color","white");
+		$.each(links, function (key,value)
 		{
-			$("#main").append("<p class='emphasis'>No subjects yet!</p><p>Go to 'Manage Exams' to add a new subject.");
-			examsNext.append("<p class='emphasis'>No subjects yet!</p><p>Go to 'Manage Exams' to add a new subject.");
-		}
-		else
-		{
-			$.each(subjects,function (key,value)
+			if (key!=link)
 			{
-				$("#main").append("<p class='emphasis'>"+key+"</p><p><b>Current: </b>"+subjects[key]["gpa"]+",<b> Goal: </b>"+subjects[key]["goal"]+"</p>");
-				chartDraw("#scr2",key,subjects[key]["chartdata"],key);
-				examsNext.append("<p class='emphasis'>"+key+"</p>")
-				var count = 0;
-				for (var a = 0;a<subjects[key]["chartdata"].length;a++)
-				{
-					if (subjects[key]["chartdata"][a]["done"] == false)
-					{
-						examsNext.append("<p><b>"+subjects[key]["chartdata"][a]["exam"]+"</b>, "+subjects[key]["chartdata"][a]["weight"]+"% of final grade");
-						count++;
-					}
-				}
-				if (count == 0)
-				{
-					examsNext.append("<p><b>None</b></p>")
-				}
-			});
-		}
-	};
-	//main start up
-	/*var xmlhttp = new XMLHttpRequest();
-	var url = "dashboard/overview";
-	
-	xmlhttp.onreadystatechange = function() {
-		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-			var subjects = JSON.parse(xmlhttp.responseText);
-			subjectRead(subjects);
-		}
+				$(links[key]).css("z-index","0");
+				$(links[key]).css("opacity","0");
+				$(key).css('background-color','#59323C');
+				$(key).css("color","#F2EEB3");
+			}
+		});
 	}
-	xmlhttp.open("POST", url, true);
-	xmlhttp.send();*/
-	
+
+	//main start up
 	//loads JSON data and defaults screen to mainpage
 	subjectRead(subjects);
 	$("#main").css("z-index","1");
 	$("#main").css("opacity","1");
-	iA = ["#scr1","#scr2","#scr3","#scr4","#main"];
-	iL = ["#hl1","#hl2","#hl3","#hl4","#ml"];
-	
+	$("#ml").css("background-color","#8C6954");
+	$("#ml").css("color","white");
+
 	//div click functions to switch windows
-	$("#ml").click(function () {
-		subjectRead(subjects);
-		$("#main").css("z-index","1");
-		$("#main").css("opacity","1");
-		$("#ml").css("color","white");
-		for (var i = 3;i>=0;i--) {
-			$(iA[i]).css("z-index","0");
-			$(iA[i]).css("opacity","0");
-			$(iL[i]).css("color","#626A72");
-		}
-	});
-	
-	$("#hl1").click(function () {
-		subjectRead(subjects);
-		$("#scr1").css("z-index","1");
-		$("#scr1").css("opacity","1");
-		$("#hl1").css("color","white");
-		for (var i = 1;i<5;i++) {
-			$(iA[i]).css("z-index","0");
-			$(iA[i]).css("opacity","0");
-			$(iL[i]).css("color","#626A72");
-		}
-	});
-	
-	$("#hl2").click(function () {
-		subjectRead(subjects);
-		$("#scr2").css("z-index","1");
-		$("#scr2").css("opacity","1");
-		$("#hl2").css("color","white");
-		for (var i = 2;i<5;i++) {
-			$(iA[i]).css("z-index","0");
-			$(iA[i]).css("opacity","0");
-			$(iL[i]).css("color","#626A72");
-		}
-		$("#scr1").css("z-index","0");
-		$("#scr1").css("opacity","0");
-		$("#hl1").css("color","#626A72");
-	});
-	
-	$("#hl3").click(function () {
-		subjectRead(subjects);
-		$("#scr3").css("z-index","1");
-		$("#scr3").css("opacity","1");
-		$("#hl3").css("color","white");
-		for (var i = 1;i>-1;i--) {
-			$(iA[i]).css("z-index","0");
-			$(iA[i]).css("opacity","0");
-			$(iL[i]).css("color","#626A72");
-		}
-		$("#scr4").css("z-index","0");
-		$("#scr4").css("opacity","0");
-		$("#hl4").css("color","#626A72");
-		$("#main").css("z-index","0");
-		$("#main").css("opacity","0");
-		$("#ml").css("color","#626A72");
-	});
-	
-	$("#hl4").click(function () {
-		subjectRead(subjects);
-		$("#scr4").css("z-index","1");
-		$("#scr4").css("opacity","1");
-		$("#hl4").css("color","white");
-		for (var i = 2;i>-1;i--) {
-			$(iA[i]).css("z-index","0");
-			$(iA[i]).css("opacity","0");
-			$(iL[i]).css("color","#626A72");
-		}
-		$("#main").css("z-index","0");
-		$("#main").css("opacity","0");
-		$("#ml").css("color","#626A72");
+	$.each(links,function (key,value) {
+		$(key).click(function() {linkClick(key)});
 	});
 	
 	//form collection for exam addition
 	$("#scr3Submit").click(function () {
 		var subject = $("#examSubject").val();
 		var name = $("#examName").val();
-		var percent = $("#examPercent").val();
+		var percent = parseFloat($("#examPercent").val());
 		var count = 0;
 		var err = false;
 		var errAlert = "";
@@ -248,10 +229,14 @@ $(document).ready(function() {
 			if ($("#newSub").prop("checked"))
 			{
 				subjects[subject] = {"gpa":"0","goal":"0","chartdata":[{"exam":name,"weight":percent,"done":false}]};
+				$.post(aurl,JSON.stringify({"requestType":"addExamNew","subject":subject,"exam":name,"percentage":0,"done":0,"weight":percent}),null,"json");
+				console.log({'requestType':'addExamNew','subject':subject,'exam':name,'percentage':0,'done':'False','weight':percent});
 			}
 			else
 			{
 				subjects[subject]["chartdata"].push({"exam":name,"weight":percent,"done":false});
+				$.post(aurl,JSON.stringify({"requestType":"addExam","subject":subject,"exam":name,"percentage":0,"done":0,"weight":percent}),null,"json");
+				console.log({'requestType':'addExam','subject':subject,'exam':name,'percentage':0,'done':'False','weight':percent});
 			}
 		}
 		else alert(errAlert);
@@ -262,9 +247,10 @@ $(document).ready(function() {
 	$("#recSubmit").click(function () {
 		var subject = $("#recSubject").val();
 		var name = $("#recName").val();
-		var mark = parseInt($("#recMark").val());
-		var total = parseInt($("#recTotal").val());
+		var mark = parseFloat($("#recMark").val());
+		var total = parseFloat($("#recTotal").val());
 		var percent = mark/total*100;
+		alert(percent);
 		var count = 0;
 		var err = false;
 		var errAlert = "";
@@ -298,8 +284,10 @@ $(document).ready(function() {
 				{
 					subjects[subject]["chartdata"][i]["percentage"] = percent;
 					subjects[subject]["chartdata"][i]["done"] = true;
+					$.post(aurl,JSON.stringify({'requestType':'updateExam','subject':subject,'exam':name,'percentage':percent,'done':'True','weight':subjects[subject]['chartdata'][i]["weight"]}),null,'json');
 				}
 			}
+			gpaCalc(subject);
 			alert("Response recorded: For subject "+subject+", examination name is "+name+" with a mark of "+mark+" out of "+total+".");
 		}
 		else alert(errAlert);
@@ -338,12 +326,8 @@ $(document).ready(function() {
 			var goal = {"subject":subject,"goal":gpa};
 			alert("Response recorded: For subject "+goal["subject"]+", goal GPA is "+goal["goal"]);
 			subjects[subject]["goal"] = gpa;
+			$.post(aurl,JSON.stringify({'requestType':'goal','subject':subject,'goal':gpa}),null,'json');
 		}
 		else alert(errAlert);
-	});
-	
-	//synchronises JSON file with backend once window is left
-	$(window).unload(function () {
-		//XML send
 	});
 });

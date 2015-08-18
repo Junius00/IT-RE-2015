@@ -2,9 +2,9 @@ body {
 	margin:0px;
 	padding:0px;
 	border:0px;
-	font-family: 'Open Sans', sans-serif;
-	background-color:#152253;
-	color:#626A72;
+	font-family: 'Lato', sans-serif;
+	background-color:#BFAF80;
+	color:#F2EEB3;
 }
 
 text.uv-axes-label.cal {
@@ -17,6 +17,17 @@ text {
 a {
 	/*color:white;*/
 	text-decoration:none;
+}
+
+.banner{
+	position:absolute;
+	top:0%;
+	left:0%;
+	width:100%;
+	height:29%;
+	text-align:center;
+	color:white;
+	
 }
 
 .graph {
@@ -33,10 +44,9 @@ a {
 .navBar {
 	width: 100%;
 	position: absolute;
-	top: 0%;
+	top: 16%;
 	left: 0%;
-	height: 9%;
-	background-color: #FF8C00;
+	height: 8%;
 	text-align: center;
 }
 
@@ -44,11 +54,14 @@ a {
 	width: 20%;
 	height: 100%;
 	float: left;
+	border-top-left-radius:20px;
+	border-top-right-radius:20px;
+	background-color: #59323C;
 }
 
 .hText {
 	margin:0%;
-	font-size:150%;
+	font-size:1.5vw;
 	position:relative;
 	top:50%;
 	transform:translateY(-50%);
@@ -59,21 +72,37 @@ a {
 	padding:0.5%;
 	/*color:white;*/
 	margin: 0px;
-	width: 94%;
+	width: 99%;
 	position: absolute;
-	top: 10%;
-	left: 2.5%;
-	height:87%;
-	border-radius:1%;
-	background-color: #0E161F;
+	top: 24%;
+	left: 0%;
+	height:74%;
+	background-color: #8C6954;
 	z-index:0;
 	opacity:0;
 	overflow-x:hidden;
 	overflow-y:auto;
+	font-size:1vw;
 }
 
 .emphasis {
 	font-size:150%;
 	color:white;
 	font-weight:bold;
-}s
+}
+
+.input {
+	width:10vw;
+	height:1.2vw;	
+}
+
+.button {
+	width:3.5vw;
+	height:1.2vw;
+	font-size:0.8vw;	
+}
+
+#newSub {
+	width:1vw;
+	height:1vw;	
+}
