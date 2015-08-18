@@ -330,4 +330,24 @@ $(document).ready(function() {
 		}
 		else alert(errAlert);
 	});
+	
+	$('#sampleAdd').click(function () {
+		alert("Response recorded: For subject Math, examination name is Sample Test with a percentage of the final grade of 3%");
+		subjects['Math']["chartdata"].push({"exam":'Sample Test',"weight":3,"done":false});
+		$.post(aurl,JSON.stringify({"requestType":"addExam","subject":'Math',"exam":'Sample Test',"percentage":0,"done":0,"weight":3}),null,"json");
+	});
+	
+	$('#sampleUpdate').click(function () {
+		alert("Response recorded: For subject Math, examination name is Sample Test with a mark of 75 out of 100.");
+		for (var i = 0;i < subjects['Math']["chartdata"].length;i++)
+		{
+			if (subjects['Math']["chartdata"][i]["exam"] == 'Sample Test')
+			{
+				subjects['Math']["chartdata"][i]["percentage"] = 75;
+				subjects['Math']["chartdata"][i]["done"] = true;
+				$.post(aurl,JSON.stringify({'requestType':'updateExam','subject':'Math','exam':'Sample Test','percentage':75,'done':'True','weight':subjects['Math']['chartdata'][i]["weight"]}),null,'json');
+			}
+		}
+		gpaCalc(subject);
+	});
 });
